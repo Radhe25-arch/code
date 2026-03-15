@@ -28,90 +28,116 @@ const LandingPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-40 pb-24 px-8">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 blur-[150px] rounded-full -z-10"></div>
-        <div className="max-w-6xl mx-auto text-center">
+      <section className="relative pt-48 pb-32 px-8 overflow-hidden">
+        {/* Animated Background Orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/30 blur-[120px] rounded-full animate-pulse opacity-50"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-accent/20 blur-[150px] rounded-full animate-pulse delay-700 opacity-50"></div>
+        
+        <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-block bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-primary text-sm font-semibold mb-6"
-          >
-            🚀 100% Free Gamified Learning
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
+            className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-full text-primary text-xs font-black uppercase tracking-widest mb-8 shadow-xl shadow-primary/10"
           >
-            Learn to Code. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">For Free. Forever.</span>
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-ping"></span>
+            100% Free Gamified Learning
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-6xl md:text-8xl font-black mb-8 leading-none tracking-tighter"
+          >
+            Elevate Your <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-accent animate-gradient">Coding Reality.</span>
           </motion.h1>
+          
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10"
+            className="text-gray-400 text-lg md:text-2xl max-w-3xl mx-auto mb-12 font-medium leading-relaxed"
           >
-            Master web development, DSA, and programming through challenges, tournaments, and a world-class curriculum. No hidden fees. Just code.
+            The world's first narrative-driven, gamified coding arena. Master Web Dev, DSA, and System Design with zero fees. Just raw skills and legendary rewards.
           </motion.p>
+          
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto"
           >
-            <Link to="/signup" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full text-lg font-bold flex items-center justify-center gap-2 group transition-all">
-              Start Learning Free <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+            <Link to="/signup" className="group relative bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-2xl text-lg font-black uppercase tracking-widest transition-all overflow-hidden shadow-2xl shadow-primary/40">
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                Create Account <Rocket className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
-            <a href="#courses" className="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-full text-lg font-bold transition-all">
-              View Courses
+            <a href="#courses" className="bg-white/5 backdrop-blur-xl hover:bg-white/10 border border-white/10 px-10 py-5 rounded-2xl text-lg font-black uppercase tracking-widest transition-all text-white">
+              View Scroll
             </a>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats Ticker Placeholder */}
-      <section className="bg-black/40 border-y border-white/5 py-8">
-        <div className="max-w-6xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* Live Stats Ticker */}
+      <section className="bg-black/60 backdrop-blur-3xl border-y border-white/10 py-12">
+        <div className="max-w-7xl mx-auto px-8 grid grid-cols-2 lg:grid-cols-4 gap-12">
           {[
-            { label: 'Active Students', value: '150k+' },
-            { label: 'Courses', value: '50+' },
-            { label: 'Tournaments', value: '2k+' },
-            { label: 'XP Awarded', value: '1.2B+' },
+            { label: 'Legendary Warriors', value: '150k+', icon: <Users className="text-primary w-4 h-4" /> },
+            { label: 'Skill Scrolls', value: '50+', icon: <BookOpen className="text-accent w-4 h-4" /> },
+            { label: 'Arena Clashes', value: '2k+', icon: <Zap className="text-yellow-400 w-4 h-4" /> },
+            { label: 'XP Burned', value: '1.2B+', icon: <Award className="text-purple-400 w-4 h-4" /> },
           ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-              <div className="text-gray-500 text-sm uppercase tracking-wider">{stat.label}</div>
-            </div>
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative group text-center lg:text-left"
+            >
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-2">
+                {stat.icon}
+                <div className="text-4xl font-black text-white tracking-tighter group-hover:text-primary transition-colors">{stat.value}</div>
+              </div>
+              <div className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">{stat.label}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-8 max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Why CodeArena?</h2>
-          <p className="text-gray-400">Everything you need to go from beginner to legend.</p>
+      <section id="features" className="py-32 px-8 max-w-7xl mx-auto relative">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl font-black mb-4 tracking-tighter uppercase italic">The Armory</h2>
+          <div className="h-1 w-20 bg-primary mx-auto rounded-full mb-6 shadow-[0_0_10px_#7C3AED]"></div>
+          <p className="text-gray-400 text-lg">Tools and systems designed to forge your coding legacy.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { icon: <Zap className="text-yellow-400" />, title: 'Gamified Experience', desc: 'Earn XP, level up, and unlock epic badges as you learn.' },
-            { icon: <Target className="text-accent" />, title: 'Weekly Tournaments', desc: 'Compete with developers worldwide in live coding battles.' },
-            { icon: <BookOpen className="text-primary" />, title: 'Premium Courses', desc: 'High-quality content on Web Dev, DSA, AI, and more.' },
-            { icon: <Users className="text-blue-400" />, title: 'Vibrant Community', desc: 'Join thousands of learners and share your achievements.' },
-            { icon: <Rocket className="text-red-400" />, title: 'Progress Tracking', desc: 'Detailed analytics and roadmaps for your career growth.' },
-            { icon: <Award className="text-green-400" />, title: '100% Free', desc: 'No subscriptions, no paywalls. Forever open for everyone.' },
+            { icon: <Zap className="text-yellow-400" />, title: 'Gamified XP', desc: 'Every line of code awards XP. Level up your warrior and unlock legendary status.' },
+            { icon: <Target className="text-accent" />, title: '1v1 Duels', desc: 'Challenge friends in real-time battles. Winner takes the XP, loser earns the lesson.' },
+            { icon: <Award className="text-primary" />, title: 'Artifact Store', desc: 'Buy legendary gear with your hard-earned XP to gain passive buffs.' },
+            { icon: <Rocket className="text-red-400" />, title: 'Career Radar', desc: 'Automatic portfolio generation based on your actual coding performance.' },
+            { icon: <Code className="text-blue-400" />, title: 'Deep Tech Stack', desc: 'Master React, Python, Go, and DSA with industry-standard problems.' },
+            { icon: <Users className="text-green-400" />, title: 'Battle Circles', desc: 'Join guilds, share artifacts, and conquer the leaderboard together.' },
           ].map((feature, i) => (
             <motion.div 
               key={i}
-              whileHover={{ y: -5 }}
-              className="bg-[#1a0b2e] p-8 rounded-2xl border border-white/5 hover:border-primary/30 transition-all group"
+              whileHover={{ y: -10 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-[#1a0b2e]/50 backdrop-blur-xl p-10 rounded-[2.5rem] border border-white/5 hover:border-primary/40 transition-all group overflow-hidden relative"
             >
-              <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl group-hover:bg-primary/20 transition-all rounded-full"></div>
+              <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center mb-8 group-hover:rotate-12 group-hover:scale-110 transition-all border border-white/5">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
+              <h3 className="text-2xl font-black mb-4 tracking-tight uppercase group-hover:text-primary transition-colors">{feature.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed font-medium">{feature.desc}</p>
             </motion.div>
           ))}
         </div>
