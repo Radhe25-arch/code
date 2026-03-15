@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(cuid())
+  email             String             @unique
+  password          String?
+  fullName          String
+  username          String             @unique
+  role              Role               @default(STUDENT)
+  ageGroup          AgeGroup           @default(BEGINNER)
+  interests         String[]
+  avatar            String?
+  xp                Int                @default(0)
+  level             String             @default("Beginner")
+  streak            Int                @default(0)
+  lastLogin         DateTime?
+  joinedAt          DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  
+  completedCourses  UserCourse[]
+  badges            UserBadge[]
+  tournamentResults TournamentResult[]
+  activities        Activity[]
+  
+  // New features
+  duelsAsPlayer1    Duel[]             @relation("Player1")
+  duelsAsPlayer2    Duel[]             @relation("Player2")
+  duelsWon          Duel[]             @relation("Winner")
+  dailyQuests       UserDailyQuest[]
+  inventory         Inventory[]
+  portfolioSlug     String?            @unique
+}
+
+model Duel {
+  id            String    @id @default(cuid())
+  player1Id     String
+  player1       User      @relation("Player1", fields: [player1Id], references: [id])
+  player2Id     String
+  player2       User      @relation("Player2", fields: [player2Id], references: [id])
+  winnerId      String?
+  winner        User?     @relation("Winner", fields: [winnerId], references: [id])
+  
+  question      String
+  difficulty    Difficulty
+  
+  player1Stats  Json?     // { time: Int, accuracy: Float, code: String }
+  player2Stats  Json?
+  
+  status        DuelStatus @default(PENDING)
+  createdAt     DateTime   @default(now())
+  finishedAt    DateTime?
+}
+
+enum DuelStatus {
+  PENDING
+  ACTIVE
+  FINISHED
+  CANCELLED
+}
+
+model DailyQuest {
+  id          String           @id @default(cuid())
+  title       String
+  description String
+  xpReward    Int
+  date        DateTime         @unique @default(now())
+  users       UserDailyQuest[]
+}
+
+model UserDailyQuest {
+  userId      String
+  questId     String
+  isCompleted Boolean    @default(false)
+  user        User       @relation(fields: [userId], references: [id])
+  quest       DailyQuest @relation(fields: [questId], references: [id])
+  @@id([userId, questId])
+}
+
+model Item {
+  id          String      @id @default(cuid())
+  name        String
+  description String
+  type        ItemType
+  rarity      Rarity      @default(COMMON)
+  buffValue   Float       // e.g. 1.2 for 20% XP boost
+  icon        String
+  inventories Inventory[]
+}
+
+enum ItemType {
+  XP_BOOST
+  STREAK_FREEZE
+  ACCURACY_BUFF
+  COSMETIC
+}
+
+enum Rarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+model Inventory {
+  userId    String
+  itemId    String
+  quantity  Int      @default(1)
+  isEquipped Boolean @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
+  @@id([userId, itemId])
+}
+
