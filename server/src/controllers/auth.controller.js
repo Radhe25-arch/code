@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../lib/prisma.js';
+import { sendWelcomeEmail } from '../utils/email.js';
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -39,6 +40,12 @@ export const signup = async (req, res) => {
         interests,
       },
     });
+
+    try {
+      await sendWelcomeEmail(user.email, user.fullName);
+    } catch (emailError) {
+      console.error('Welcome email failed:', emailError);
+    }
 
     const token = generateToken(user.id);
 

@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import prisma from '../lib/prisma.js';
+import { sendWelcomeEmail } from '../utils/email.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -32,6 +33,12 @@ passport.use(
               role: 'STUDENT',
             },
           });
+          
+          try {
+            await sendWelcomeEmail(user.email, user.fullName);
+          } catch (emailError) {
+            console.error('Welcome email failed for Google user:', emailError);
+          }
         }
 
         return done(null, user);
